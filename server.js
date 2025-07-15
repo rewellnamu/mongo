@@ -4,21 +4,24 @@ const { connectToDB, getCollection } = require('./db');
 
 const app = express();
 const PORT = 3000;
+const cors = require('cors');
 
+
+app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'front')));
 
 (async () => {
   await connectToDB();
 
   app.post('/api/users', async (req, res) => {
     try {
-      const { name, email } = req.body;
+      const { name, email, kidato, adm } = req.body;
       if (!name || !email) {
         return res.status(400).json({ message: 'Name and email are required' });
       }
 
-      const result = await getCollection('users').insertOne({ name, email });
+      const result = await getCollection('users').insertOne({ name, email,kidato, adm});
       res.status(201).json(result);
     } catch (error) {
       console.error('Error adding user:', error);

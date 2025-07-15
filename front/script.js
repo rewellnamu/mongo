@@ -3,11 +3,13 @@ document.getElementById('userForm').addEventListener('submit', async (e) => {
 
   const name = document.getElementById('name').value.trim();
   const email = document.getElementById('email').value.trim();
+  const kidato = document.getElementById('kidato').value.trim();
+  const adm = document.getElementById('adm').value.trim();
 
-  const res = await fetch('/api/users', {
+  const res = await fetch('http://localhost:3000/api/users', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, email })
+    body: JSON.stringify({ name, email, kidato, adm }),
   });
 
   const data = await res.json();
@@ -32,4 +34,6 @@ document.getElementById('userForm').addEventListener('submit', async (e) => {
   }
   document.getElementById('name').value = '';
   document.getElementById('email').value = '';
+  document.getElementById('adm').value = '';
+  document.getElementById('kidato').value = '';
 });
